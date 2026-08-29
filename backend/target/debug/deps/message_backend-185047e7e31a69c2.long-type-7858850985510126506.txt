@@ -1,1 +1,0 @@
-Sse<KeepAliveStream<tokio_stream::adapters::Map<BroadcastStream<Ping>, {closure@src/handlers/ping_handler.rs:39:57: 39:94}>>>

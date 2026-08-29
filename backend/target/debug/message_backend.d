@@ -1,1 +1,0 @@
-/home/Lucci/Documents/Projects/message_backend/target/debug/message_backend: /home/Lucci/Documents/Projects/message_backend/src/handlers/ping_handler.rs /home/Lucci/Documents/Projects/message_backend/src/handlers.rs /home/Lucci/Documents/Projects/message_backend/src/main.rs /home/Lucci/Documents/Projects/message_backend/src/state.rs
