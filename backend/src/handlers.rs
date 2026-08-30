@@ -4,6 +4,7 @@ use axum::{
     routing::{get, post},
     Router,
 };
+use tower_http::cors::{Any, CorsLayer};
 
 use crate::{handlers::ping_handler::get_ping_routes, state::SharedState};
 
@@ -13,6 +14,11 @@ pub mod ping_handler;
 
 // Function to create the main application router TO DO add app state
 pub fn app_router(state: SharedState) -> Router {
+    let cors = CorsLayer::new()
+        .allow_origin("http://localhost:1420".parse::<axum::http::HeaderValue>().unwrap())
+        .allow_methods(Any)
+        .allow_headers(Any);
+
     Router::new()
         // Define the root route
         .route("/", get(root))
@@ -20,6 +26,7 @@ pub fn app_router(state: SharedState) -> Router {
         // Define a fallback handler for 404 errors
         .nest("/ping", get_ping_routes(state.clone()))
         .fallback(handler_404)
+        .layer(cors)
         .with_state(state)
         // Attach the application state to the router
 }

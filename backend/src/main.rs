@@ -6,7 +6,7 @@ mod state;
 
 use crate::state::AppState;
 
-const IP_ADDR: &str = "127.0.0.1";
+const IP_ADDR: &str = "0.0.0.0";
 const PORT: i32 = 7878;
 
 
