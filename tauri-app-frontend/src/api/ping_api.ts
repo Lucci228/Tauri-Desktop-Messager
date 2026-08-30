@@ -15,3 +15,4 @@ export async function ping_server(): Promise<PingResponse> {
   const res = await apiFetch<PingResponse>("/ping/test");
   return res
 }
+

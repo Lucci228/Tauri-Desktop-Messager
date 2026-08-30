@@ -35,7 +35,7 @@ async fn ping_event_handle(
     let broadcast_rx = state.ping_state.notify.subscribe();
     let stream = BroadcastStream::new(broadcast_rx).map(|result| -> Result<Event, Infallible> {
         let event = match result {
-            Ok(_) => Event::default().data("ping"),
+            Ok(_) => Event::default().data("ping").event("ping"),
             Err(e) => Event::default().event("lagged").data(e.to_string()),
         };
         Ok(event)
