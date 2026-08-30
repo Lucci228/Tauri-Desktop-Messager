@@ -1,0 +1,10 @@
+.alarm-content {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.ping-button {
+
+    background: linear-gradient(red, purple);
+    background-color: pink;
+}
