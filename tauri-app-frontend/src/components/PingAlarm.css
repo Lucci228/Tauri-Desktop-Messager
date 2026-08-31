@@ -1,21 +1,47 @@
-.alarm-content {
-    display: flex;
-    margin: auto;
-    width: 100%;
-    justify-content: space-evenly;
+.ping-div {
+  margin: 2rem auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+
+  /* Modern Responsive Sizing */
+  width: min(90%, 500px);
+  min-height: 400px;
+  padding: 2rem;
+  border-radius: 12px;
+  background: linear-gradient(to top right, darkblue, purple);
 }
 
-.ping-div {
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    height: 50vh;
-    width: 50vw;
-    align-items: center;
-    background-color: darkblue;
+.alarm-img {
+  width: 100%;
+  max-width: 250px; /* Limits size on big screens */
+  height: auto; /* Maintains natural aspect ratio */
+  object-fit: contain;
 }
 
 .ping-button {
-    background: linear-gradient(red, purple);
-    background-color: pink;
+  width: 100%;
+  max-width: 200px; /* Responsive full-width on tiny screens, capped on larger */
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(135deg, red, purple);
+
+  /* Smooth interaction */
+  transition: transform 0.1s ease, opacity 0.2s ease;
+}
+
+.ping-button:hover {
+  opacity: 0.9;
+}
+
+.ping-button:active {
+  transform: scale(0.97);
 }

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useTimeout } from "../hooks/use_timeout";
+import { usePingListener, useTimeout } from "../hooks/hooks";
 import "./NotificationBar.css"
 
 function Notification({ onExpire, timeout }: { onExpire: () => void; timeout: number }) {
@@ -9,21 +9,16 @@ function Notification({ onExpire, timeout }: { onExpire: () => void; timeout: nu
 
 function NotificationBar() {
   const [pings, setPings] = useState<number[]>([]);
-  const serverUrl = "http://localhost:7878/ping/listen";
-
-  useEffect(() => {
-    const evListener = new EventSource(serverUrl);
-
-    evListener.addEventListener("ping", () => {
-      setPings((prev) => {
-        const nextData = [...prev, Date.now()];
-        console.log("Pinged! " + nextData.length);
-        return nextData;
-      });
+  const pingHandler = () => {
+    setPings((prev) => {
+      const nextData = [...prev, Date.now()];
+      console.log("Pinged! " + nextData.length);
+      return nextData;
     });
+  }
 
-    return () => evListener.close();
-  }, []);
+  usePingListener(pingHandler)
+
 
   const handleExpire = (id: number) => {
     console.log("expire uwuw");

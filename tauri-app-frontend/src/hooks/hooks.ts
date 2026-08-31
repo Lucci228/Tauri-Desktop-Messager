@@ -15,5 +15,16 @@ export function useTimeout(callback: () => void, delay: number | null): void {
     }, delay);
 
     return () => clearTimeout(id);
-  }, []);
+  }, [delay]);
+}
+
+export function usePingListener(callback: () => void) {
+  const serverUrl = "http://localhost:7878/ping/listen";
+  useEffect(() => {
+    const evListener = new EventSource(serverUrl)
+    evListener.addEventListener("ping", callback)
+  	return () => {
+     evListener.close()
+  	};
+  }, [serverUrl]);
 }
