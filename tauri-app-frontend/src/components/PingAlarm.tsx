@@ -1,14 +1,9 @@
 import { useState, useEffect } from "react";
 import { ping_server, PingResponse } from "../api/ping_api";
 import "./PingAlarm.css"
+import { useTimeout } from "../hooks/use_timeout";
 
-function useTimeout(callback: () => void, delay: number | null): void {
-  useEffect(() => {
-    if (delay === null) return;
-    const id = setTimeout(callback, delay);
-    return () => clearTimeout(id);
-  }, [callback, delay]);
-}
+
 
 function PingAnimation() {
   return (
