@@ -22,6 +22,7 @@ pub fn app_router(state: SharedState) -> Router {
     Router::new()
         // Define the root route
         .route("/", get(root))
+        .route("/beb", get(special_test))
         //TO DO ADD NESTED PATHS HERE
         // Define a fallback handler for 404 errors
         .nest("/ping", get_ping_routes(state.clone()))
@@ -34,6 +35,10 @@ pub fn app_router(state: SharedState) -> Router {
 // Handler for the root route
 async fn root() -> &'static str {
     "Server is running!"
+}
+
+async fn special_test() -> &'static str {
+    "TE IUBESC MUWA MUWAH"
 }
 
 // Handler for 404 Not Found errors

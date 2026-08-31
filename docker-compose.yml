@@ -1,0 +1,51 @@
+services:
+  # 1. Rust Backend Container
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: rust-backend
+    restart: unless-stopped
+    environment:
+      - RUST_LOG=info
+      - PORT=7878
+    networks:
+      - app-net
+
+  # 2. Tailscale Funnel Container
+  tailscale:
+    image: tailscale/tailscale:latest
+    container_name: tailscale-funnel
+    hostname: beb-app-backend  # The hostname that appears in your Tailscale dashboard
+    restart: unless-stopped
+    environment:
+      - TS_AUTHKEY=${TS_AUTHKEY}
+      - TS_STATE_DIR=/var/lib/tailscale
+      - TS_USERSPACE=false
+      - TS_EXTRA_ARGS=--reset
+    volumes:
+      - tailscale-data:/var/lib/tailscale
+      - /dev/net/tun:/dev/net/tun
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    command: >
+      sh -c "
+        /usr/local/bin/containerboot &
+        echo 'Waiting for Tailscale connection...'
+        until tailscale status; do sleep 2; done
+        echo 'Enabling Tailscale Funnel...'
+        tailscale funnel --bg http://backend:7878
+        sleep infinity
+      "
+    networks:
+      - app-net
+    depends_on:
+      - backend
+
+networks:
+  app-net:
+    driver: bridge
+
+volumes:
+  tailscale-data:
